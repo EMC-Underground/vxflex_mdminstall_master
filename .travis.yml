@@ -27,3 +27,12 @@ script:
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/?branch=master
+
+notifications:
+  email:
+    recipients:
+      - bradley.soper@dell.com
+      - craig.j.smith@dell.com
+    on_success: always # default: change
+    on_failure: always # default: always
+
