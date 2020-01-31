@@ -1,3 +1,10 @@
+- name: Set odd hosts to MANAGER
+  set_fact:
+    is_manager: "{% if inventory_hostname in groups['mdm'][::2] %}1{% else %}0{% endif %}"
+  tags:
+    - install_mdm
+
+
 - name: "Copy RHEL 7 SIO Files"
   copy:
     src: ./files/EMC-ScaleIO-mdm-{{ vxflex_version }}.el7.x86_64.rpm
@@ -6,13 +13,13 @@
     group: root
     mode: 0644
   tags:
-    - install_mdm_manager
+    - install_mdm
 
 - name: "Install MDM and set the host to Master"
   yum:
     name: '/tmp/EMC-ScaleIO-mdm-{{ vxflex_version }}.el7.x86_64.rpm'
     state: present
   environment:
-    MDM_ROLE_IS_MANAGER: 1
+    MDM_ROLE_IS_MANAGER: "{{ is_manager }}"
   tags:
-    - install_mdm_manager
+    - install_mdm
