@@ -5,6 +5,8 @@
     owner: root
     group: root
     mode: 0644
+  tags:
+    - install_mdm_manager
 
 - name: "Install MDM and set the host to Master"
   yum:
@@ -12,3 +14,5 @@
     state: present
   environment:
     MDM_ROLE_IS_MANAGER: 1
+  tags:
+    - install_mdm_manager
